@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/trout_backgrnd"
+    android:orientation="vertical"
+    tools:context="com.example.nk.trout.appmedialarm.MainActivity">
+<!--Screen 1: Aufruf - Kein Alarm aktiv-->
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="70">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/trout"
+                android:layout_weight="0"
+                android:adjustViewBounds="true"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/black" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/Texts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_no_active"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="8dp"
+            android:textSize="32dp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:id="@+id/no_active_text" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black" />
+        <TextView
+            android:id="@+id/btn_create_alarm"
+            style="@style/Texts"
+            android:textSize="20dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:text="@string/btn_create_alarm" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black" />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/medialarm_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="30"
+        android:src="@drawable/medialarm_logo" />
+
+</LinearLayout>

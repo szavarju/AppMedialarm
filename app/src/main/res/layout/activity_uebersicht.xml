@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/trout_backgrnd"
+    android:orientation="vertical"
+    tools:context="com.example.nk.trout.appmedialarm.Uebersicht">
+<!--Screen 4: Übersicht Alarme-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+
+            <ImageView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="0"
+                android:adjustViewBounds="true"
+                android:background="@android:color/white"
+                android:src="@drawable/trout" />
+
+            <ImageView
+
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/black" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/Headline"
+            android:layout_below="@id/header"
+            android:id="@+id/title_uebersicht"
+            android:text="@string/title_activity_uebersicht"/>
+        <ListView
+            android:layout_below="@id/title_uebersicht"
+
+            android:id="@+id/alarm_list"
+            android:layout_margin="10dp"
+            android:background="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/black"
+            android:layoutMode="opticalBounds">
+
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="10dp"
+            android:id="@+id/btn_adm_row"
+            >
+
+            <Button
+                android:id="@+id/delete_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/delete_alarm" />
+
+            <Button
+                android:id="@+id/edit_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/edit_alarm" />
+
+            <Button
+                android:id="@+id/create_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/create_alarm" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</LinearLayout>
