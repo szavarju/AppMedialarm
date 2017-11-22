@@ -20,16 +20,11 @@ import java.util.Timer;
 //Screen 6: Zeitangaben Einrichten
 public class ZeitangabenEinrichten extends AppCompatActivity {
 
-    Date currentTime = Calendar.getInstance().getTime();
+    Date currentTime;
 
-    int hours = currentTime.getHours();
-    int minutes = currentTime.getMinutes();
-    int seconds = currentTime.getSeconds();
-
-    int alarmHour = hours;
-    int alarmMinutes = minutes;
-    int alarmSeconds = seconds;
-
+    int alarmHour;
+    int alarmMinutes;
+    int alarmSeconds;
 
     TabHost TabHostWindow;
     @Override
@@ -81,7 +76,7 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                alarmMinutes = minutes + 5;
+                alarmMinutes = currentTime.getMinutes() + 5;
 
             }
         });
@@ -110,13 +105,18 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
             }
         }
 
+        currentTime = Calendar.getInstance().getTime();
+        alarmHour = currentTime.getHours();
+        alarmMinutes = currentTime.getMinutes();
+        alarmSeconds = currentTime.getSeconds();
+
         Calendar cal = Calendar.getInstance();
         Intent activate = new Intent(this, Alarm.class);
         AlarmManager alarms ;
         PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, activate, 0);
         alarms = (AlarmManager)  this.getSystemService(Context.ALARM_SERVICE);
         cal.set(Calendar.HOUR_OF_DAY, alarmHour);
-        cal.set(Calendar.MINUTE, alarmMinutes+5);
+        cal.set(Calendar.MINUTE, alarmMinutes+2);
         cal.set(Calendar.SECOND, alarmSeconds);
         alarms.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
 
