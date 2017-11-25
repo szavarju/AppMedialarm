@@ -5,9 +5,11 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TabHost;
 import java.util.Calendar;
 import android.view.View;
@@ -68,24 +70,14 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
 
         }
 
-        // Find alarm view
-        final View btnInFive = (View) findViewById(R.id.in_5_minutes);
 
-        // Add click listener to create alarm view
-        btnInFive.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                alarmMinutes = currentTime.getMinutes() + 5;
-
-            }
-        });
 
 
         class Alarm extends BroadcastReceiver {
 
             @Override
             public void onReceive(Context context, Intent intent) {
+                Log.d("Alarm", "Got alarm");
                 final MediaPlayer mp = MediaPlayer.create(context, R.raw.breeze);
                 mp.start();
                 mp.isLooping();
@@ -105,23 +97,42 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
             }
         }
 
+        // here we register the receiver with the app so that it knows it exists
+        // the intent filter is used as a form of unique identifier for an event that gets broadcast
+        // you will see when we create the alarmIntent that we tag the intent in the parameters with the same tag as here
+        registerReceiver(new Alarm(), new IntentFilter("Alarm"));
+
+
         currentTime = Calendar.getInstance().getTime();
         alarmHour = currentTime.getHours();
         alarmMinutes = currentTime.getMinutes();
         alarmSeconds = currentTime.getSeconds();
 
         Calendar cal = Calendar.getInstance();
-        Intent activate = new Intent(this, Alarm.class);
+
         AlarmManager alarms ;
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, activate, 0);
-        alarms = (AlarmManager)  this.getSystemService(Context.ALARM_SERVICE);
+
+        // notice we added the "Alarm" tag to the intent so the app knows to fire the Alarm :D
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent("Alarm"), 0);
+        alarms = (AlarmManager)  getSystemService(Context.ALARM_SERVICE);
         cal.set(Calendar.HOUR_OF_DAY, alarmHour);
-        cal.set(Calendar.MINUTE, alarmMinutes+2);
+        cal.set(Calendar.MINUTE, alarmMinutes);
         cal.set(Calendar.SECOND, alarmSeconds);
         alarms.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
 
 
+        // Find alarm view
+        final View btnInFive =  findViewById(R.id.in_5_minutes);
 
+        // Add click listener to create alarm view
+        btnInFive.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
 
     }
 }

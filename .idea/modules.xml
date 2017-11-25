@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AppMedialarm.iml" filepath="$PROJECT_DIR$/AppMedialarm.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file:///run/media/captainmoha/dev/Projects/AppMedialarm/AppMedialarm.iml" filepath="/run/media/captainmoha/dev/Projects/AppMedialarm/AppMedialarm.iml" />
+      <module fileurl="file:///run/media/captainmoha/dev/Projects/AppMedialarm/app/app.iml" filepath="/run/media/captainmoha/dev/Projects/AppMedialarm/app/app.iml" />
     </modules>
   </component>
 </project>
