@@ -94,7 +94,7 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
                 // create media player to play alarm audio
                 final MediaPlayer mp = MediaPlayer.create(context, R.raw.breeze);
                 mp.start();
-                mp.isLooping();
+                mp.setLooping(true);
 
                 // Find stop alarm button
                 final View btnStopAlarm = findViewById(R.id.stop_alarm);
@@ -115,11 +115,8 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
                         timeIsSet = false;
 
                         // disable stop button to avoid crash when clicked
-                        btnStopAlarm.setEnabled(false);
-
-                        // cancel button can be clicked but is not intuitive to user as there is no repetition
                         if(playOnce){
-                            btnCancel.setEnabled(false);
+                            btnStopAlarm.setEnabled(false);
                         }
                     }
                 });
