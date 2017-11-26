@@ -27,6 +27,9 @@
     <string name="hour">h</string>
     <string name="in_5_minutes">in 5 Minuten</string>
     <string name="stop_alarm">Alarm beenden</string>
+    <string name="set_alarm_time">Alarmzeit fertig</string>
+    <string name="cancel_alarm">Alarm abbrechen</string>
+    <string name="repeat_2_min">Wiederholung in 2 Min.</string>
 
 
 </resources>

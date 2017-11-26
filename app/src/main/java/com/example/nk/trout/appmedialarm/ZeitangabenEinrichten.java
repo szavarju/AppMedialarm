@@ -10,9 +10,14 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.TabHost;
 import java.util.Calendar;
 import android.view.View;
+import android.widget.TimePicker;
+import android.widget.Toast;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Timer;
@@ -27,6 +32,10 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
     int alarmHour;
     int alarmMinutes;
     int alarmSeconds;
+
+    boolean timeIsSet = false;
+    boolean anAlarmIsSet = false;
+    boolean playOnce;
 
     TabHost TabHostWindow;
     @Override
@@ -70,20 +79,26 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
 
         }
 
-
+        // Find cancel alarm button
+        final View btnCancel =  findViewById(R.id.cancel_alarm);
 
 
         class Alarm extends BroadcastReceiver {
 
+            // When alarm intent is received, the media file will be played
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d("Alarm", "Got alarm");
+                // Confirm that alarm is received
+                //Log.d("Alarm", "Got alarm");
+
+                // create media player to play alarm audio
                 final MediaPlayer mp = MediaPlayer.create(context, R.raw.breeze);
                 mp.start();
                 mp.isLooping();
 
                 // Find stop alarm button
-                View btnStopAlarm = (View) findViewById(R.id.stop_alarm);
+                final View btnStopAlarm = findViewById(R.id.stop_alarm);
+                btnStopAlarm.setEnabled(true);
 
                 // Add click listener to stop alarm
                 btnStopAlarm.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +107,20 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
                     public void onClick(View view) {
                         mp.stop();
                         mp.release();
+
+                        // reset time settings
+                        alarmHour = 0;
+                        alarmMinutes = 0;
+                        alarmSeconds = 0;
+                        timeIsSet = false;
+
+                        // disable stop button to avoid crash when clicked
+                        btnStopAlarm.setEnabled(false);
+
+                        // cancel button can be clicked but is not intuitive to user as there is no repetition
+                        if(playOnce){
+                            btnCancel.setEnabled(false);
+                        }
                     }
                 });
             }
@@ -103,36 +132,117 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
         registerReceiver(new Alarm(), new IntentFilter("Alarm"));
 
 
-        currentTime = Calendar.getInstance().getTime();
-        alarmHour = currentTime.getHours();
-        alarmMinutes = currentTime.getMinutes();
-        alarmSeconds = currentTime.getSeconds();
+        // Find now button
+        final View btnNow =  findViewById(R.id.now);
 
-        Calendar cal = Calendar.getInstance();
+        // Add click listener to set alarm time to now
+        btnNow.setOnClickListener(new View.OnClickListener() {
 
-        AlarmManager alarms ;
+            @Override
+            public void onClick(View view) {
+                currentTime = Calendar.getInstance().getTime();
+                alarmHour = currentTime.getHours();
+                alarmMinutes = currentTime.getMinutes();
+                alarmSeconds = currentTime.getSeconds();
+                timeIsSet = true;
+            }
+        });
 
-        // notice we added the "Alarm" tag to the intent so the app knows to fire the Alarm :D
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent("Alarm"), 0);
-        alarms = (AlarmManager)  getSystemService(Context.ALARM_SERVICE);
-        cal.set(Calendar.HOUR_OF_DAY, alarmHour);
-        cal.set(Calendar.MINUTE, alarmMinutes);
-        cal.set(Calendar.SECOND, alarmSeconds);
-        alarms.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
-
-
-        // Find alarm view
+        // Find in 5 minutes button
         final View btnInFive =  findViewById(R.id.in_5_minutes);
 
-        // Add click listener to create alarm view
+        // Add click listener to add 5 minutes to current time
         btnInFive.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
+                currentTime = Calendar.getInstance().getTime();
+                alarmHour = currentTime.getHours();
+                alarmMinutes = currentTime.getMinutes()+5;
+                alarmSeconds = currentTime.getSeconds();
+                timeIsSet = true;
 
             }
         });
+
+        // Clicking set alarm button triggers the alarm
+        // Find set alarm button
+        final View btnSetAlarm =  findViewById(R.id.setAlarm);
+
+        // Add click listener to set alarm time to user input values
+        btnSetAlarm.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                // if now or in 5 minutes buttons have not been clicked, get user input values
+                if(!timeIsSet){
+
+                    //find time picker for time setting
+                    final TimePicker dp = findViewById(R.id.tab2);
+
+                    alarmHour = dp.getCurrentHour();
+                    alarmMinutes = dp.getCurrentMinute();
+                    alarmSeconds = Calendar.getInstance().getTime().getSeconds();
+                }
+
+                // Find repetition checkbox
+                final CheckBox checkRepetition = (CheckBox) findViewById(R.id.repeat_2_min);
+
+                Calendar cal = Calendar.getInstance();
+
+                AlarmManager alarms ;
+
+                // notice we added the "Alarm" tag to the intent so the app knows to fire the Alarm :D
+                final PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent("Alarm"), 0);
+                alarms = (AlarmManager)  getSystemService(Context.ALARM_SERVICE);
+                cal.set(Calendar.HOUR_OF_DAY, alarmHour);
+                cal.set(Calendar.MINUTE, alarmMinutes);
+                cal.set(Calendar.SECOND, alarmSeconds);
+
+
+
+                if(checkRepetition.isChecked()){
+
+                    // if repeating is checked, alarm will be set to an interval of 2 minutes (Millisec * Second * Minute)
+                    alarms.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 1000 * 60 * 2, alarmIntent);
+                    playOnce = false;
+                }
+                else{
+                    alarms.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
+                    playOnce = true;
+                }
+                anAlarmIsSet = true;
+
+
+
+                if(anAlarmIsSet){
+                    btnCancel.setEnabled(true);
+                }
+
+                // Add click listener to cancel currently set alarm
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+
+                        PendingIntent pendingAlarm = alarmIntent;
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                        alarmManager.cancel(pendingAlarm);
+
+                        anAlarmIsSet = false;
+
+                        btnCancel.setEnabled(false);
+
+                        Toast.makeText(getApplicationContext(), "Alarm cancelled!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+
+
 
     }
 }
