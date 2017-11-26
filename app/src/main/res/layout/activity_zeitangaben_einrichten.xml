@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,152 +8,156 @@
     android:orientation="vertical"
     tools:context="com.example.nk.trout.appmedialarm.ZeitangabenEinrichten">
 <!--Screen 6: Zeitangaben Einrichten-->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/header"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:orientation="vertical">
 
-            <ImageView
-
+            <LinearLayout
+                android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_weight="0"
-                android:adjustViewBounds="true"
                 android:background="@android:color/white"
-                android:src="@drawable/trout" />
+                android:orientation="vertical">
 
-            <ImageView
+                <ImageView
 
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/black" />
-
-        </LinearLayout>
-        <TextView
-            style="@style/Headline"
-            android:layout_below="@id/header"
-            android:id="@+id/title_zeitangaben"
-            android:text="@string/time_settings"/>
-
-    </RelativeLayout>
-
-    <TabHost
-        android:id="@+id/tabhost"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-
-            <TabWidget
-                android:id="@android:id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:background="@android:color/white">
-
-            </TabWidget>
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@android:id/tabcontent">
-
-                <DatePicker
-
-                    android:id="@+id/tab1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:headerBackground="@color/trout_dark">
-
-                </DatePicker>
-
-                <TimePicker
-                    android:id="@+id/tab2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TimePicker>
-                <ScrollView
-                    android:id="@+id/tab3"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0"
+                    android:adjustViewBounds="true"
+                    android:background="@android:color/white"
+                    android:src="@drawable/trout" />
 
-                        android:layout_width="match_parent"
+                <ImageView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:color/black" />
+
+            </LinearLayout>
+            <TextView
+                style="@style/Headline"
+                android:layout_below="@id/header"
+                android:id="@+id/title_zeitangaben"
+                android:text="@string/time_settings"/>
+
+        </RelativeLayout>
+
+        <TabHost
+            android:id="@+id/tabhost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@android:color/white">
+
+                </TabWidget>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@android:id/tabcontent">
+
+                    <DatePicker
+
+                        android:id="@+id/tab1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            style="@style/Texts"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
+                        android:headerBackground="@color/trout_dark">
+
+                    </DatePicker>
+
+                    <TimePicker
+                        android:id="@+id/tab2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    </TimePicker>
+                    <ScrollView
+                        android:id="@+id/tab3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <LinearLayout
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/time_period"
-                            android:textSize="28dp"
-                            android:layout_marginLeft="10dp"/>
-                        <EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="1"
-                            android:layout_margin="10dp"/>
-                        <Spinner
-                            android:id="@+id/time_period_units"
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:layout_marginRight="10dp"/>
-                        <Button
-                            android:id="@+id/now"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/now"
-                            android:layout_margin="5dp"/>
-                        <Button
-                            android:id="@+id/in_5_minutes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/in_5_minutes"
-                            android:layout_margin="5dp"/>
-                        <Button
-                            android:id="@+id/setAlarm"
+                            android:orientation="vertical">
+                            <TextView
+                                style="@style/Texts"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/time_period"
+                                android:textSize="28dp"
+                                android:layout_marginLeft="10dp"/>
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1"
+                                android:layout_margin="10dp"/>
+                            <Spinner
+                                android:id="@+id/time_period_units"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:layout_marginRight="10dp"/>
+                            <Button
+                                android:id="@+id/now"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/now"
+                                android:layout_margin="5dp"/>
+                            <Button
+                                android:id="@+id/in_5_minutes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/in_5_minutes"
+                                android:layout_margin="5dp"/>
+                            <Button
+                                android:id="@+id/setAlarm"
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/set_alarm_time"
-                            android:layout_margin="5dp"/>
-                        <Button
-                            android:id="@+id/stop_alarm"
-                            android:enabled="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/stop_alarm"
-                            android:layout_margin="5dp"/>
-                        <Button
-                            android:id="@+id/cancel_alarm"
-                            android:enabled="false"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/cancel_alarm"
-                            android:layout_margin="5dp"/>
-                        <CheckBox
-                            android:id="@+id/repeat_2_min"
-                            android:layout_margin="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/repeat_2_min"/>
-                    </LinearLayout>
-                </ScrollView>
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/set_alarm_time"
+                                android:layout_margin="5dp"/>
+                            <Button
+                                android:id="@+id/stop_alarm"
+                                android:enabled="false"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/stop_alarm"
+                                android:layout_margin="5dp"/>
+                            <Button
+                                android:id="@+id/cancel_alarm"
+                                android:enabled="false"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/cancel_alarm"
+                                android:layout_margin="5dp"/>
+                            <CheckBox
+                                android:id="@+id/repeat_2_min"
+                                android:layout_margin="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/repeat_2_min"/>
+                        </LinearLayout>
+                    </ScrollView>
 
-            </FrameLayout>
-        </LinearLayout>
-    </TabHost>
-
-</LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+        </TabHost>
+    </LinearLayout>
+</ScrollView>

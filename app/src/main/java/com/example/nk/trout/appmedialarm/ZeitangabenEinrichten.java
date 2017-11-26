@@ -17,10 +17,7 @@ import java.util.Calendar;
 import android.view.View;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.Timer;
 
 
 @SuppressWarnings("deprecation")
@@ -43,7 +40,7 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zeitangaben_einrichten);
 
-        //Assign id to Tabhost.
+        //Assign ID to TabhostWindow
         TabHostWindow = (TabHost)findViewById(R.id.tabhost);
 
         if(TabHostWindow != null){
@@ -56,32 +53,30 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
             //Setting up tab 1 name.
             String tab1title = getString(R.string.start);
             TabMenu1.setIndicator(tab1title);
+
             //Set tab 1 activity to tab 1 menu.
-            //Intent tab1 = new Intent(this,set_start_day.class);
             TabMenu1.setContent(R.id.tab1);
 
             //Setting up tab 2 name.
             TabMenu2.setIndicator(getString(R.string.time));
-            //Set tab 3 activity to tab 1 menu.
-            //TabMenu2.setContent(new Intent(this,set_time.class));
+
+            //Set tab 2 activity to tab 2 menu.
             TabMenu2.setContent(R.id.tab2);
 
-            //Setting up tab 2 name.
+            //Setting up tab 3 name.
             TabMenu3.setIndicator(getString(R.string.time_period));
-            //Set tab 3 activity to tab 3 menu.
-            //TabMenu3.setContent(new Intent(this,set_time_period.class));
-            TabMenu3.setContent(R.id.tab3);
-            //Adding tab1, tab2, tab3 to tabhost view.
 
+            //Set tab 3 activity to tab 3 menu.
+            TabMenu3.setContent(R.id.tab3);
+
+            //Adding tab1, tab2, tab3 to tabhost view.
             TabHostWindow.addTab(TabMenu1);
             TabHostWindow.addTab(TabMenu2);
             TabHostWindow.addTab(TabMenu3);
-
         }
 
         // Find cancel alarm button
         final View btnCancel =  findViewById(R.id.cancel_alarm);
-
 
         class Alarm extends BroadcastReceiver {
 
@@ -123,11 +118,10 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
             }
         }
 
-        // here we register the receiver with the app so that it knows it exists
+        // register the receiver with the app so that it knows it exists
         // the intent filter is used as a form of unique identifier for an event that gets broadcast
-        // you will see when we create the alarmIntent that we tag the intent in the parameters with the same tag as here
+        // the alarmIntent passed here is "Alarm"
         registerReceiver(new Alarm(), new IntentFilter("Alarm"));
-
 
         // Find now button
         final View btnNow =  findViewById(R.id.now);
@@ -189,16 +183,14 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
 
                 Calendar cal = Calendar.getInstance();
 
-                AlarmManager alarms ;
+                AlarmManager alarms;
 
-                // notice we added the "Alarm" tag to the intent so the app knows to fire the Alarm :D
+                // pending intent "Alarm"
                 final PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, new Intent("Alarm"), 0);
                 alarms = (AlarmManager)  getSystemService(Context.ALARM_SERVICE);
                 cal.set(Calendar.HOUR_OF_DAY, alarmHour);
                 cal.set(Calendar.MINUTE, alarmMinutes);
                 cal.set(Calendar.SECOND, alarmSeconds);
-
-
 
                 if(checkRepetition.isChecked()){
 
@@ -211,12 +203,7 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
                     playOnce = true;
                 }
                 anAlarmIsSet = true;
-
-
-
-                if(anAlarmIsSet){
-                    btnCancel.setEnabled(true);
-                }
+                btnCancel.setEnabled(true);
 
                 // Add click listener to cancel currently set alarm
                 btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -229,17 +216,12 @@ public class ZeitangabenEinrichten extends AppCompatActivity {
                         alarmManager.cancel(pendingAlarm);
 
                         anAlarmIsSet = false;
-
                         btnCancel.setEnabled(false);
 
                         Toast.makeText(getApplicationContext(), "Alarm cancelled!", Toast.LENGTH_SHORT).show();
                     }
                 });
-
             }
         });
-
-
-
     }
 }
